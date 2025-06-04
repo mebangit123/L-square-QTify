@@ -11,7 +11,7 @@ function Navbar() {
     <div>
       <nav className={styles.navbar}>         
         <Logo />
-        <Search placeholder='Search'/>
+        <Search placeholder='search'/>
         <FButton />        
       </nav>
     </div>    
