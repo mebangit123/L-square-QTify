@@ -1,24 +1,39 @@
-import logo from './logo.svg';
+import { StyledEngineProvider } from '@mui/material';
 import './App.css';
+import Navbar from './components/Navbar/Navbar';
+import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+  fetchTopAlbums,
+  fetchNewAlbums,
+  fetchSongs,
+} from './api/api'
+
 
 function App() {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    generateData("topAlbums", fetchTopAlbums); 
+    generateData("newAlbums", fetchNewAlbums);
+    generateData("songs", fetchSongs);
+  },[]);
+  //Function to make api call.......
+  const generateData = (key, source) => {
+    source().then((data) => {
+      setData((prevState) => {
+        return {...prevState, [key]: data }
+      })
+    })
+  }
+
+  const { topAlbums = [], newAlbums = [], songs = []} = data;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledEngineProvider injectFirst>
+      <Navbar />
+      <Outlet context={{data: {topAlbums, newAlbums, songs}}}/>
+    </StyledEngineProvider>   
   );
 }
 

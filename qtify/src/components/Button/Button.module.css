@@ -1,0 +1,9 @@
+.btn_fb {
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #121212;
+    color: rgba(52, 201, 75, 1);
+    padding: 10px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
